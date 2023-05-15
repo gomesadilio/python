@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 arr = np.arange(12)
 
@@ -130,3 +131,40 @@ sales_array.sort()
 sales_array = np.array([[0,5,155,0,518],[0,1827,616,317,325]])
 
 sales_array.sort(axis=0)
+
+s = pd.Series(name='Sales', data=[1,2,3,4,5,6,7,8,9])
+
+s.values
+s.index
+s.name
+s.dtype
+
+array = np.arange(5)
+
+pd.Series(array)
+
+series = pd.Series(np.arange(5), name='Test Series')
+
+series.values
+
+series.values.mean()
+
+series.mean()
+
+series.index = [10, 20, 30, 40, 50]
+
+series.name = 'Special series'
+
+series.dtype
+
+series.astype('float')
+series.astype('int')  
+
+series.index = list('abcde')
+
+sales_array.astype('bool')
+
+pd.Series(range(5)).astype('float')
+pd.Series(range(5)).astype('bool')
+pd.Series(range(5)).astype('object')
+pd.Series(range(5)).astype('string')
