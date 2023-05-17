@@ -168,3 +168,86 @@ pd.Series(range(5)).astype('float')
 pd.Series(range(5)).astype('bool')
 pd.Series(range(5)).astype('object')
 pd.Series(range(5)).astype('string')
+
+
+sales = [0,5,155,0,518]
+
+sales_series = pd.Series(sales, name='Sales')
+
+sales_series[2]
+sales_series[2:4]
+
+items = ['coffe', 'bananas', 'tea', 'coconut', 'sugar']
+
+sales_series = pd.Series(sales, index=items, name='Sales')
+
+sales_series['tea']
+
+my_series = pd.Series(range(5))
+my_series
+
+my_series[3]
+
+my_series[1:3]
+
+my_series = pd.Series(range(5), index=['Day0','Day1','Day2','Day3','Day4',])
+
+my_series.loc['Day2']
+
+my_series[::2]
+
+my_series[::-2]
+
+sales = [0, 3, 155, 0, 518]
+items = ['coffee', 'coffee', 'tea', 'coconut', 'sugar']
+
+sales_series = pd.Series(data= sales, name = 'Sales Series', index = items)
+
+sales_series
+
+sales_series['coffee']
+
+sales_series.reset_index()
+
+sales_series.reset_index(drop=True)
+
+sales_series.loc[sales_series > 0]
+
+mask = (sales_series > 0 ) & (sales_series.index == 'coffee')
+
+sales_series.loc[mask]
+
+sales_series == 5
+
+sales_series.eq(5)
+
+sales_series.index.isin(['coffee', 'tea'])
+~sales_series.index.isin(['coffee', 'tea'])
+
+my_series = pd.Series(
+    data = [0,1,2,3,4],
+    index = ['day 0', 'day 1', 'day 2', 'day 3', 'day 4'],
+    name = 'Seeeries'
+)
+
+my_series['day 0']
+
+my_series.loc[~(my_series == 2)]
+my_series.loc[my_series.ge(2)]
+my_series.loc[my_series.gt(2)]
+
+sales_series.sort_values()
+sales_series.sort_values(ascending=False)
+
+sales_series.sort_index()
+sales_series.sort_index(ascending=False)
+
+my_series.sort_values(ascending=False)
+
+sales_series
+
+sales_series['tea'] = np.NaN
+
+sales_series.add(1_000, fill_value = 0)
+
+sales_series + 2

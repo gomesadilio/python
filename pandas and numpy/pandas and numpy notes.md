@@ -39,3 +39,52 @@ Key properties:
 - index
 - name
 - dtype 
+
+Series has inclusive if slicing index is above custom indices
+
+## iloc
+
+Access values by index positional
+
+## loc
+
+Access values by custom labels
+
+## Logical operators & methods
+
+description | python operator | pandas method
+-|:-:|:-:
+equal | == | .eq()
+not equal | != | .ne()
+less than or equal | <= | .le()
+less than | < | .lt()
+greater than or equal | >= | .ge()
+greater than | > | .gt()
+membership test | in | .isin()
+inverse membership test | not in | ~.isin()
+
+## Arithmetic operators & methods
+
+operation | python operator | pandas method
+-|:-:|:-:
+addition | + | .add()
+subtraction | - | .sub() <br> .subtract()
+multiplication | * | .mul() <br> .multiply()
+division | / | .div() <br> .truediv() <br> .divide()
+floor division | // | .floordiv()
+modulo | % | .mod()
+exponentiation | ** | .pow()
+
+## String methods
+
+method|-
+-|-
+`.strip()`, `.lstrip()`, `.rstrip()` 
+`.upper()`, `.lower()`
+`.slice(start:stop:step)`
+`.count("string")`
+`.contains("string")`
+`.replace("a","b")`
+`.split("delimiter",expand=True)` 
+`.len()`
+`.startswith("string")`, `.endswith("string")`
