@@ -88,3 +88,41 @@ method|-
 `.split("delimiter",expand=True)` 
 `.len()`
 `.startswith("string")`, `.endswith("string")`
+
+## Numeric series aggregation
+
+method|-
+-|-
+`.count()`
+`.first()`, `.last()`
+`.mean()`, `.median()`
+`.min()`, `.max()`
+`.argmax()`, `.argmin()` | index fot the smallest or largest
+`.std()`, `.var()`
+`.mad()` | mean absolute deviation
+`.prod()` | product of all items
+`.sum()`
+`.quantile()` | (list) specific percentile
+
+If use `.quantile([.5], interpolation='nearest')` return real value in series
+
+### Aggregate categorical series
+
+method |-
+-|-
+`.unique()` | array of distinct items
+`.nunique()` | number of distincts
+`.value_counts()` | items and frequency
+
+If use `.value_counts(normalize=True)` return percent of each element over the total
+
+## Identifying missing data
+
+> - Use `.isna()` for this purpose 
+> - `df.isna().sum()` return the count of NaN values 
+> - `df.value_counts(dropna=False)` count the all values, include NaN 
+
+## Handling missing data
+
+- `.dropna()`
+- `fillna()`
