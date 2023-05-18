@@ -251,3 +251,30 @@ sales_series['tea'] = np.NaN
 sales_series.add(1_000, fill_value = 0)
 
 sales_series + 2
+
+df = pd.DataFrame(np.random.randint(1,100,26))
+
+df.sort_values(0, ascending=False).plot(kind='bar')
+
+import seaborn as sns
+
+df.columns = ['CL']
+
+sns.barplot(x=df.index, y=df['CL'])
+
+az = list(map(lambda x: chr(x + 97), range(26)))
+
+for i, v in enumerate(az):
+    print(65 + i, v)
+
+ts = pd.Series(name = 'val', data = np.random.randint(1,10,10))
+
+ts
+
+ts.argmin()
+ts.argmax()
+ts.std()
+ts.var()
+ts.mad()
+ts.prod()
+ts.quantile([.25,.5,.75, .95, .99])

@@ -118,11 +118,14 @@ If use `.value_counts(normalize=True)` return percent of each element over the t
 
 ## Identifying missing data
 
-> - Use `.isna()` for this purpose 
-> - `df.isna().sum()` return the count of NaN values 
-> - `df.value_counts(dropna=False)` count the all values, include NaN 
+ - Use `.isna()` for this purpose 
+ - `df.isna().sum()` return the count of NaN values 
+ - `df.value_counts(dropna=False)` count the all values, include NaN 
 
 ## Handling missing data
 
-- `.dropna()`
-- `fillna()`
+- `.dropna()` - remove rows
+- `fillna()` - replace with other value
+
+
+`reset_index(drop=True)` -> drop old index
