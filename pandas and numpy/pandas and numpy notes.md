@@ -129,3 +129,42 @@ If use `.value_counts(normalize=True)` return percent of each element over the t
 
 
 `reset_index(drop=True)` -> drop old index
+
+## Apply method
+
+`df.apply(lambda x: x[-1] if len(x) > 3 else 0)``
+
+## Where method
+
+`df.where(logical test, value if False, inplace=False)`
+
+\# of `numpy.where`
+
+trick: invert condition with `~`
+
+you can **chain.where() methods** to combine logical expressions
+
+```py
+(clean_wholesale
+.where(~(clean_wholesale > 20), round(clean_wholesale * 0.9, 2))
+.where(clean_wholesale > 10, 0)
+)
+```
+
+# Dataframes
+
+## Dataframes properties
+
+- **shape** - number of rows and columns
+- **index** - by default a range of integers (axis = 0)
+- **columns** - columns index in a DataFrame (axis = 1)
+- **axes** - the row and column indice in a DF
+- **dtypes** - for each Series in DF
+
+## Exploring a dataframe
+
+- **head** - first n rows
+- **tail** - last n rows
+- **sample** - n random rows `df.sample(5, random_state=12345)`
+- **info** - details: size, columns and memory usage `df.info(show_counts=True)`, for always display null count (limit aprox ~1.7m rows by default)
+- **describe** - statistics for the columns - only numerical columns by default `df.describe(include='all).round()` for show all columns, round make output more readable
