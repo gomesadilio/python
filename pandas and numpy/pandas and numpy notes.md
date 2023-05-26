@@ -168,3 +168,30 @@ you can **chain.where() methods** to combine logical expressions
 - **sample** - n random rows `df.sample(5, random_state=12345)`
 - **info** - details: size, columns and memory usage `df.info(show_counts=True)`, for always display null count (limit aprox ~1.7m rows by default)
 - **describe** - statistics for the columns - only numerical columns by default `df.describe(include='all).round()` for show all columns, round make output more readable
+
+## Drop rows and columns
+
+- `df.drop('column1', axis=1)`
+- `df.drop(2, axis=0)`
+
+## Identifying duplicate rows
+
+- `df.duplicated()`
+- `df.duplicated(subset='product')` - column(s) to look for duplicates
+
+## Dropping duplicate rows
+
+- `df.drop_duplicates()`
+- `df.drop_duplicates(subset='product', keep='last', ignore_index=True)` - ign_idx reset index if necessary
+
+## Identify missing data
+
+- `df.isna().sum`
+- `df.info()`
+
+## Handling missing data
+
+- `df.fillna(0)`
+- `df.fillna({'price': 0, 'product': 'none'})`
+- `df.dropna()`
+- `df.dropna(subset='price')`
