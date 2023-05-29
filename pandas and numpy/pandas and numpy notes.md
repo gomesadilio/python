@@ -195,3 +195,203 @@ you can **chain.where() methods** to combine logical expressions
 - `df.fillna({'price': 0, 'product': 'none'})`
 - `df.dropna()`
 - `df.dropna(subset='price')`
+
+## Query method
+
+SQL-like syntax to filter DataFrames
+
+- `retail_df.query("family in ['CLEANING', 'DAIRY'] and sales > 0")`
+- You can especify any numbers of filtering conditions by using the "and" & "or" keywords
+- You can reference variables by using the "@" symbol
+
+```py
+avg_sales = retail_df.loc[:,"sales"].mean()
+retail_df.query("family in ['CLEANING', 'DAIRY'] and sales > @avg_sales")
+```
+
+## Sorting dataframes by indices
+
+`.sort_index()`
+
+- This sort by rows (axis=0) default, but you can specify axis=1 to sort the columns
+- `df.sort_index(ascending=True)`
+- `df.sort_index(axis=1, inplace=True)`
+
+## Sorting dataframes by values
+
+`.sort_values()` 
+
+`sample_df.sort_values(['family', 'sales'], ascending=[True,False])`
+
+## Renaming columns
+
+```py
+product_df.columns = ['product_name', 'cost']
+
+product_df.columns = [col.upper() for col in product_df.columns]
+
+product_df.rename(columns={'product': 'product_name', 'price': 'cost'})
+
+product_df.rename(columns=lambda x: x.upper())
+```
+
+## Reordering columns
+
+- Pass a list of the existing columns in their desired order, and specify axis=1
+
+```py
+product_df.reindex(labels=['product_id', 'product', 'price'], axis=1)
+```
+
+## Numpy select
+
+- Create columns based on multiple conditions
+
+```py
+conditions = [
+    (baby_book["date"] == "2017-02-23") & (baby_book["family"] == "BABY CARE"),
+    (baby_book["date"] == "2017-12-24") & (baby_book["family"] == "BOOKS"),
+    (baby_book["date"] == "2017-09-06") & (baby_book["store_nbr"] > 28),
+]
+
+choices = ["Winter Clearance", "Christmas Eve", "New Store Special"]
+
+baby_books["Sale_Name"] = np.select(conditions, choices, default="No Sale")
+```
+
+## Mapping values to columnns
+
+- Create new columns by mapping dictionary keys
+
+```py
+mapping_dict = {'Dairy':'Non-Vegan', 'Vegetables':'Vegan', 'Fruits':'Vegan'}
+
+produt_df['Vegan?'] = product_df['product'].map(mapping_dict)
+```
+
+- You can apply lambda functios (and others)
+
+```py
+product_df['price'] = product_df['price'].map(lambda x: f'R${x}')
+```
+
+## Assign method
+
+- Create multiples columns at once
+
+```py
+sample_df.assign(tax_amount=sample_df['sales'] * 0.05)
+```  
+
+# Pandas data types
+
+> **NUMERIC**
+
+Data Type | Description | Bit Sizes | Lib
+-|-|-|-
+bool| Boolean True/False|8|NumPy
+int64 *(default)*|Whole Numbers | 8, 16, 32, 64|NumPy
+float64 *(default)*|Decimal Numbers | 8, 16, 32, 64|NumPy
+boolean|Nullable Boolean True/False |8|Pandas
+Int64 *(default)*|Nullabe Whole Numbers | 8, 16, 32, 64|Pandas
+Float64 *(default)*|Nullabe Decimal Numbers | 8, 16, 32, 64|Pandas
+
+> **Object / Text**
+
+Data Type | Description
+-|-
+object | Any Python object
+string | Only contains strings or text
+category | Maps categorical data to a numeric array for efficiency
+
+> **Time Series**
+
+Data Type | Description
+-|-
+datetime | A single moment int time
+timedelta | The duration between two dates or times
+period | A span of time
+
+## Convert data types
+
+`sample_df['sales_int'] = sample_df['sales'].astype('int')`
+
+`sample_df = sample_df.astype({'date':'datetime64', 'onpromotion':'float'})`
+
+## Memory Optimization
+
+- Deep = True provide more accurate results
+
+`class_data.memory_usage(deep=True).sum()`
+`class_data.info(memory_usage='deep')`
+
+Rules:
+
+1. Drop unecessary columns
+1. Convert object types to numeric or datetime
+1. Downcast numeric data to the smallest appropriate bit size
+1. Use the categorical datatype for columns where the number of unique values < rows / 2
+
+_**Numeric:**_
+. | . 
+:-:|-:
+ 8-bits | +- 127 
+ 16-bits | +- 32.767
+ 32-bits | +- 2.147.483.647
+64-bits | +- 9.223.372.036.854.775.807
+
+
+<img src="./image1.png"  width="900" >
+
+
+# Grouping dataframes
+
+ `small_reatail.groupby('family')[['sales']].sum()`
+>- Double brackets returns a DataFrame, one return a Series
+
+## Grouping multiple columns 
+
+```py
+sales_sums = (small_retail
+                .groupby(['family', 'store_nbr'], as_index=False)
+                [['sales']]
+                .sum()
+)
+```
+
+- If you use **as_index=False** prevent the grouped columns from becoming indices
+
+## Multi-index dataframes
+
+- They are stored as a list of tuples
+
+### Modifying multi-index dataframes
+
+**RESET THE INDEX**
+
+`.reset_index()`
+- Moves the index levels back to DataFrame columns
+
+**SWAP THE INDEX LEVEL**
+
+`.swaplevel()`
+- Changes the hierarchy for the index levels
+
+**DROP AN INDEX LEVEL**
+
+`.droplevel('family')`
+- Drops an index level from the DataFrame entirely
+
+## The agg method
+
+`.agg()` allow perform multiple aggregations on a "groupby" object
+
+```py
+(small_retail
+.groupby(['family', 'store_nbr'])
+.agg(
+    sales_sum=('sales','sum'),
+    sales_avg=('sales','avg'),
+    on_promotion_max=('onpromotion','max'))
+)
+```
