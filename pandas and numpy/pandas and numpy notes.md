@@ -395,3 +395,33 @@ sales_sums = (small_retail
     on_promotion_max=('onpromotion','max'))
 )
 ```
+
+## Transform
+
+`.transform()`
+- Can be used to perform aggregations without reshaping
+
+```py
+small_retail.assign(store_sales = (small_retail
+                                    .groupby('store_nbr')['sales']
+                                    .transform('sum')))
+```
+
+## Pivot Tables
+
+- Let`s you create Excel-style Pivot Tables
+
+```py
+smaller_retail.pivot_table(index='family',
+                            columns='store_nbr',
+                            values='sales',
+                            aggfunc='sum',
+                            margins=True)
+```
+
+- Pivot table method has these arguments:
+    - **index** roww
+    - **columns** cols
+    - **values**
+    - **aggfunc**
+    - **margins** totals by rows and cols
