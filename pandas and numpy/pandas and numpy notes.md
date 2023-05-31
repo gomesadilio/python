@@ -425,3 +425,61 @@ smaller_retail.pivot_table(index='family',
     - **values**
     - **aggfunc**
     - **margins** totals by rows and cols
+
+- Multiple aggregations functions
+
+```py
+smaller_retail.pivot_table(index='family',
+                            columns='store_nbr',
+                            values='sales',
+                            aggfunc=({'sales':['sum', 'mean'], 'onpromotion':'max'}))
+```
+
+- Heatmaps in Pivot Table
+
+`.style.background_gradient(cmap="RdYlGn", axis=None)`
+- Axis = None -> Apply to all dataframe
+- Axis = 0 -> To rows
+- Axis = 1 -> To Columns
+
+## Melt
+
+- The `.melt()` method will *unpivot* DataFrame , or convert columns into rows
+
+`country_revenue.melt(id_vars='country')`
+
+```py
+country_revenue.melt(
+    id_vars='country',
+    value_vars=['2001', '2002', '2003'],
+    var_name='year',
+    value_name='GDP'
+)
+```
+
+# Time Series
+
+## Date Time conversions
+
+- Ignore errors will return the Series as an 'object', not datetime
+
+```py
+shipping_dates.astype(
+    {'order_date':'datetime64', 'delivery_date':'datetime64'}, errors='ignore'
+)
+```
+
+### TO_DATETIME
+
+- Option more flexible
+
+```py
+shipping_dates['delivery_date'] = pd.to_datetime(
+    shipping_dates['delivery_date'],
+    errors='coerce',
+    infer_datetime_format=True,
+    # format= '%Y-%M-%D',
+)
+```
+
+- **NaT** -> for _'not a time'_
