@@ -483,3 +483,47 @@ shipping_dates['delivery_date'] = pd.to_datetime(
 ```
 
 - **NaT** -> for _'not a time'_
+
+## Datetime codes
+
+> **DATE**
+
+Code | Example | Description
+-|-|-
+%D | 07/14/2022 | Zero-padded date (basead on OS Settings)
+%Y | 2023 | Four-digit year
+%m | 07 | Month of the year
+%B | July | Full month name
+%d | 14 | Day of the month
+%w | 4 | Weekday number (0-6, Sunday-Saturday)
+%A | Thursday | Full weekday name
+%U | 28 | Week of the year (starting on the first Sunday)
+%j | 195 | Day of the year
+
+> **TIME**
+
+Code | Example | Description
+-|-|-
+%T | 16:36:30 | Zero-padded time (24-hour format)
+%H | 16 | Hour (24-hour format)
+%I | 04 | Hour (12-hour format)
+%p | PM | AM or PM (based on OS Settings)
+%M | 36 | Minute
+%S | 30 | Second
+
+- Extract parts of datetime by 2 methods
+
+`sales.date.dt.year`
+
+`sales.date.dt.strftime('%Y')`
+
+_**Parts**_
+- dt.date
+- dt.year
+- dt.month
+- dt.day
+- dt.dayofweek
+- dt.quarter
+- dt.hour
+- dt.minute
+- dt.second
