@@ -527,3 +527,85 @@ _**Parts**_
 - dt.hour
 - dt.minute
 - dt.second
+
+## Time delta
+
+`.to_timedelta()` - use frenquencies to return timedelta values
+
+Frequency | Unit
+-|-
+D|Day
+W|Week
+H|Hour
+T|Minute
+S|Second
+
+```py
+pd.to_timedelta(5, unit='D')
+
+shipping_dates + pd.to_timedelta(5, unit='W')
+```
+
+> Months, quartes and year only use in _**resampling**_
+
+-|-
+-|-
+M|Month
+Q|Quarter
+Y|Year
+
+## Time series indices
+
+```py
+sales.loc[sales['date'].dt.year == 2023]
+
+sales.set_index('date').loc['2023']
+
+dates.loc['2022']
+
+dates.loc['2022':'2023']
+
+dates.loc['2022-01':'2022-02']
+
+dates.loc['2022-01-01':'2022-02-28']
+``` 
+
+## Missing time series data
+
+```py
+dates.ffill() # foward
+dates.bfill() # back
+
+dates = dates.astype('float64')
+dates.interpolate() # average two elements
+```
+
+## Shifting series
+
+`dates.shift(-1)`
+
+- Specify any positive or negative number to shift
+
+```py
+(dates / dates.shift(1)).sub(1).mul(100).round(2)
+# Calculating period-over-period growth
+```
+
+$$\text{Growth} = \dfrac{\text{Current Period}}
+{\text{Previous Period}}-1$$
+
+## Diff
+
+`dates.diff()`
+
+- Calculates the difference between the values in a Series and those same values shifted a specified number of periods
+
+`dates.diff(2)`
+
+- Previous by default, but you can specify the numbers of rows as well
+
+## Aggregating time series
+
+ **Resampling** is a special form of time series aggregation that modifies date indices and fills any gaps to create continuous date values
+
+ `dates.resample('M').sum()`
