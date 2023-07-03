@@ -609,3 +609,77 @@ $$\text{Growth} = \dfrac{\text{Current Period}}
  **Resampling** is a special form of time series aggregation that modifies date indices and fills any gaps to create continuous date values
 
  `dates.resample('M').sum()`
+
+ ## Rolling aggregations
+
+- Calculate moving averages
+
+ `dates.rolling(2).mean()`
+
+ # Read csv
+
+## Missing values
+
+`na_values=["Missing", "."]` 
+
+ ## Parsing dates
+
+ `infer_datetime_format=True` 
+ - parse dates to datetime64
+
+ ## Read excel
+
+`pd.read_excel('file.xlsx', sheet_name=1)`
+
+`pd.read_excel('file.xlsx', sheet_name='my_sheet')`
+
+```py
+pd.concat(
+    pd.read_excel('file.xlsx', sheet_name=None),
+    ignore_index=True
+)
+```
+
+# Joining DataFrames
+
+```py
+pd.concat([df1, df2], ignore_index=True)
+```
+
+**CSV Files**
+
+```py
+transactions = pd.concat(
+    (pd.read_csv('transactions_2014.csv'),
+     pd.read_csv('transactions_2015.csv'))
+)
+```
+
+
+**Excel**
+
+```py
+transactions = pd.concat(
+    pd.read_excel('DataSales.xlsx', sheet_name = [1,2] #None),
+    ignore_index=True
+).drop(['Unnamed: 0'], axis=1)
+```
+
+## Merge
+
+```
+left_df.merge(right_df,
+              how,
+              left_on,
+              right_on)
+```
+
+# Write excel data
+
+```py
+with pd.ExcelWriter("MyExcelFile.xlsx") as writer:
+    for year in range(2013, 2018):
+        transactions.loc[transactions["Date"]].dt.year == year].to_excel(
+            writer, sheet_name =str(year)
+        )
+```
